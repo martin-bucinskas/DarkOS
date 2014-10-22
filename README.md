@@ -25,12 +25,12 @@ Here is how everything brakes down.
 ######Assemble.bat
 Assemble.bat is a build tool which calls different scripts to build the project into a final floppy image which can be used for
 testing and distribution.
-This script calls other scripts in the ~~scripts~~ directory.
+This script calls other scripts in the _scripts_ directory.
 
 ######Assemble.bat explanation
 Firstly, it removes the current floppy disk image.
-Then it navigates to the ~~lib~~ directory where it will call DD to create a new floppy disk image of size of 1440KB (1.44MB).
-After that, using NASM, the ASM files are assembled into ~~.bin~~ files and placed in the ~~bin~~ directory.
+Then it navigates to the _lib_ directory where it will call DD to create a new floppy disk image of size of 1440KB (1.44MB).
+After that, using NASM, the ASM files are assembled into _.bin_ files and placed in the _bin_ directory.
 Lastly, using DD, the bootStage1.bin is placed in the first sector of the floppy disk image and the bootStage2.bin is placed
 in the second sector of the floppy disk image.
 
@@ -62,4 +62,4 @@ You can get NASM at:
 http://www.nasm.us/pub/nasm/releasebuilds/?C=M;O=D
 
 ###Notice
-Bear in mind that I am not the best or most skilled programmer. I am a beginner in assembly and C. However, I do know some higher level languages such as Java, Visual Basic .NET and parts of C# and C/C++. Therefore I do realise that the code I produce may not be up to the ~~industry~~ standards.
+Bear in mind that I am not the best or most skilled programmer. I am a beginner in assembly and C. However, I do know some higher level languages such as Java, Visual Basic .NET and parts of C# and C/C++. Therefore I do realise that the code I produce may not be up to the _industry_ standards.
