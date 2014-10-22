@@ -13,14 +13,16 @@ Information about the build
 This project is currently developed under Windows operating system. This means that external programs and libraries are used
 to compile and assemble the project.
 
-== DD ==
+DD
+==
 Allows flexible copying of data under win32 environment.
 
 You can get DD at:
 
 http://www.chrysocome.net/dd
 
-== NASM ==
+NASM
+==
 The famous Netwide Assembler.
 Used to assemble asm files.
 
