@@ -41,6 +41,13 @@ in the second sector of the floppy disk image.
 |1        |Holds bootStage2.bin file. The second stage of the bootloader.|
 |...      |Other sectors may be filled in later on with the second stage bootloader or the kernel.|
 
+##TODO
+ - Use python for the scripts to automate the build. Python is available for most platforms and is easy to install, write and use.
+ - Create a better directory system.
+ - Make the bootStage2 load the kernel in protected mode.
+ - Create a kernel in C.
+ - Create a shell to go with the kernel.
+
 ##Information about the build
 
 This project is currently developed under Windows operating system. This means that external programs and libraries are used
