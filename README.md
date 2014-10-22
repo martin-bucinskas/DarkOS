@@ -7,7 +7,7 @@ bootStage1 - Sets up the environment and the data tables for bootStage2.
 bootStage2 - Sets the environment suitable for the kernel and loads the kernel into the memory.
 
 ##Why make it public?
-There are a lot of explanations and tutorials on the internet on how to create the bootloaders and the kernels and the operating systems. However most of them do not explain the building part of the project on a Windows platform. Most of the programs used to assemble and compile are *UNIX based. Therefore, I am releasing this as a project and also as a tool/guide on how to actually assemble the project on windows platforms.
+There are a lot of explanations and tutorials on the internet on how to create the bootloaders and the kernels and the operating systems. However most of them do not explain the building part of the project on a Windows platform. Most of the programs used to assemble and compile are *NIX based. Therefore, I am releasing this as a project and also as a tool/guide on how to actually assemble the project on windows platforms.
 
 ##How does it work?
 Currently, the scripts do not assemble everything. They only assemble bootStage1.asm and bootStage2.asm.
