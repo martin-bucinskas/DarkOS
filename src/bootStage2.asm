@@ -1,47 +1,72 @@
-[BITS 16]
-
-_msg_ DB "...", 0x00
-_msg2_ DB ">>> Works! <<<", 0x00
-
 start:
-	; Updates the segment registers
-	CLI				; Disable interrupts
-	MOV AX, CS
-	MOV DS, AX
-	MOV ES, AX
-	MOV SS, AX
-	STI				; Enable interrupts
+	MOV SI, LOADED_MSG
+	CALL print_new_line
 	
-	MOV SI, _msg_
-	CALL println
-	MOV SI, _msg2_
-	CALL println
-	JP hang
+	; Enable A20 line if disabled
+	CALL A20_LINE
+
+;TODO >> FIX KERNEL LOADING INTO MEMORY <<
+	MOV SI, LOADING_KERNEL
+	CALL print_new_line
+	CALL loadKernel
+	
+	; Set up basic stack
+	MOV AX, 0x0100
+	MOV SS, AX
+	MOV SP, 0x0200
+	
+	; Load GDT
+	CLI
+	LGDT[GDTR]
+	
+	; Enable protected mode
+	MOV EAX, CR0
+	OR AL, 0x01
+	MOV CR0, EAX
+	
+	;JMP 0x08:0x9000
+	
+	JMP $
 	
 ; >>> Methods <<<
 
-print:
-	LODSB
-	OR AL, AL		; Clear AL register
-	JZ generalRet
-	MOV AH, 0x0E	; Write char in TTY mode
-	INT 0x10		; Video services
-	JMP print
+A20_LINE:
+	CALL check_A20
+	CMP AX, 0x00
+	JE .skip_enable_A20
+	CMP AX, 0x01
+	JE .enable_A20
 	
-generalRet:
-	ret
-
-println:
-	CALL print
-	MOV AL, 0x00	; Null terminator
-	STOSB
-	MOV AH, 0x0E
-	MOV AL, 0x0D	; Read graphics pixel
-	INT 0x10
-	MOV AL, 0x0A	; Write char at cursor
-	INT 0x10
-	RET
+	.enable_A20:
+		MOV SI, A20_DISABLED
+		CALL print_new_line
+		
+		CALL enable_A20
+		
+		MOV SI, A20_ENABLED
+		CALL print_new_line
+		
+		RET
+		
+	.skip_enable_A20
+		MOV SI, A20_ALREADY_ENABLED
+		CALL print_new_line
+		RET
+		
+%INCLUDE "KernelLoader.inc"
+%INCLUDE "Print.inc"
+%INCLUDE "Debug.inc"
+%INCLUDE "A20.inc"
+%INCLUDE "GDT.inc"
 	
-hang:
-	CLI				; Clear interrupts
-	HLT				; Halt so the CPU doesn't get munched up
+LOADED_MSG			DB	"Second Stage Loaded.", 0x00
+A20_ALREADY_ENABLED	DB	"A20 is already enabled.", 0x00
+A20_DISABLED		DB	"A20 is disabled. Attempting to enable it.", 0x00
+A20_ENABLED			DB 	"A20 enabled.", 0x00
+LOADING_KERNEL		DB	"Loading the kernel into memory.", 0x00
+GDTR:
+	NULL_SEL 
+	DD 0
+	DD 0
+	GDTsize DW 0x10	; Limit
+	GDTbase	DD 0x50	; Base address
