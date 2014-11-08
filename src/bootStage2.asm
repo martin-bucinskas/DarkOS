@@ -53,11 +53,11 @@ A20_LINE:
 		CALL print_new_line
 		RET
 		
-%INCLUDE "KernelLoader.inc"
-%INCLUDE "Print.inc"
-%INCLUDE "Debug.inc"
-%INCLUDE "A20.inc"
-%INCLUDE "GDT.inc"
+%INCLUDE "KernelLoader.asm"
+%INCLUDE "Print.asm"
+%INCLUDE "Debug.asm"
+%INCLUDE "A20.asm"
+%INCLUDE "GDT.asm"
 	
 LOADED_MSG			DB	"Second Stage Loaded.", 0x00
 A20_ALREADY_ENABLED	DB	"A20 is already enabled.", 0x00
