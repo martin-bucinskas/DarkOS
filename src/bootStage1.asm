@@ -44,7 +44,7 @@ disk_load:
 	MOV DS, AX
 	RET
 	
-%INCLUDE "Print.inc"
+%INCLUDE "Print.asm"
 	
 ; >>> Data <<<
 

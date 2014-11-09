@@ -5,7 +5,6 @@ start:
 	; Enable A20 line if disabled
 	CALL A20_LINE
 
-;TODO >> FIX KERNEL LOADING INTO MEMORY <<
 	MOV SI, LOADING_KERNEL
 	CALL print_new_line
 	CALL loadKernel
@@ -17,14 +16,14 @@ start:
 	
 	; Load GDT
 	CLI
-	LGDT[GDTR]
+	LGDT [gdt_descriptor]
 	
 	; Enable protected mode
 	MOV EAX, CR0
 	OR AL, 0x01
 	MOV CR0, EAX
 	
-	;JMP 0x08:0x9000
+	JMP CODE_SEG:init_protected_mode
 	
 	JMP $
 	
@@ -58,6 +57,7 @@ A20_LINE:
 %INCLUDE "Debug.asm"
 %INCLUDE "A20.asm"
 %INCLUDE "GDT.asm"
+%INCLUDE "Kernel.asm"
 	
 LOADED_MSG			DB	"Second Stage Loaded.", 0x00
 A20_ALREADY_ENABLED	DB	"A20 is already enabled.", 0x00
